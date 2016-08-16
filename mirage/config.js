@@ -25,8 +25,42 @@ export default function() {
 
   // this.get('/posts', 'post');
 
-  this.get('/posts', (schema) => {
-    return schema.posts.all();
+  // this.get('/posts', (schema) => {
+  //   return schema.posts.all();
+  // });
+
+  // Try making the fixture file name should be plural, /mirage/fixtures/posts.js
+  // We just pushed a change that will prevent this in the future - samselikoff
+  // this.get('/posts', function(db /*, request */) {
+  //   return {
+  //     data: db.posts.map(attrs => ({
+  //       type: 'posts',
+  //       id: attrs.id,
+  //       attributes: attrs
+  //     }))
+  //   };
+  // });
+
+  this.get('/posts', function(schema /*, request */) {
+    let json = this.serialize(schema.posts.all());
+
+    json.meta = {
+      some: 'posts'
+    };
+
+    return json;
+  });
+
+  this.get('/posts/:id', function(schema, request) {
+    let id = request.params.id;
+
+    return {
+      data: {
+        type: 'posts',
+        id: id,
+        attributes: schema.posts.find(id)
+      }
+    };
   });
 
   // single data
@@ -44,7 +78,7 @@ export default function() {
   // });
 
   // collection of data
-  // this.get('/posts', function(db, request) {
+  // this.get('/posts', function(db/*, request */) {
   //   return {
   //     data: db.posts.map(attrs => (
   //       { type: 'posts', id: attrs.id, attributes: attrs }
