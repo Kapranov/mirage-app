@@ -16,6 +16,49 @@ export default function() {
     http://www.ember-cli-mirage.com/docs/v0.2.x/shorthands/
   */
 
-  this.get('posts');
-  this.get('posts/:id');
+  // this.namespace = '';
+
+  // REST adapter data
+  // this.get('posts');
+  // this.get('posts/:id');
+  // The JSON API standard requires a data block in this format with attributes.
+
+  // this.get('/posts', 'post');
+
+  this.get('/posts', (schema) => {
+    return schema.posts.all();
+  });
+
+  // single data
+  // this.get('/posts/:id', function(db, request) {
+  //   let id = request.params.id;
+  //
+  //   // return db.posts.all();
+  //   return {
+  //     data: {
+  //       type: 'posts',
+  //       id: id,
+  //       attributes: db.posts.find(id)
+  //     }
+  //   };
+  // });
+
+  // collection of data
+  // this.get('/posts', function(db, request) {
+  //   return {
+  //     data: db.posts.map(attrs => (
+  //       { type: 'posts', id: attrs.id, attributes: attrs }
+  //     ))
+  //   };
+  // });
+
+  // this.get('/posts', (db) => {
+  //   let data = {};
+  //   data = db.posts.map((attrs) => {
+  //     let rec = {type: 'posts', id: attrs.id, attributes: attrs};
+  //     return rec;
+  //   });
+  //
+  //   return { data };
+  // });
 }
