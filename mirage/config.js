@@ -25,20 +25,29 @@ export default function() {
 
   // this.get('/posts', 'post');
 
-  // this.get('/posts', (schema) => {
-  //   return schema.posts.all();
+  // Currently, data that's returned from a route handler passes through
+  // the serializer layer. If you return an ORM Model or Collection,
+  // it will get serialized:
+  //  this.get('/posts', (schema) => {
+  //     return schema.posts.all();
+  //  });
+
+  // this.get('/posts', (schema, request) => {
+  //   let posts = schema.posts.all();
+  //
+  //   let json = this.serializerOrRegistry.serialize(posts, request);
+  //
+  //   json.meta = {};
+  //
+  //   return json;
   // });
 
-  // Try making the fixture file name should be plural, /mirage/fixtures/posts.js
-  // We just pushed a change that will prevent this in the future - samselikoff
-  // this.get('/posts', function(db /*, request */) {
-  //   return {
-  //     data: db.posts.map(attrs => ({
-  //       type: 'posts',
-  //       id: attrs.id,
-  //       attributes: attrs
-  //     }))
-  //   };
+  // this.get('/posts', (schema) => {
+  //   let posts = schema.posts.all();
+  //
+  //   let json = this.serializerOrRegistry.serialize(posts, 'posts');
+  //
+  //   return json;
   // });
 
   this.get('/posts', function(schema /*, request */) {
